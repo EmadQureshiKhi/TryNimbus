@@ -1,0 +1,43 @@
+[project]
+name = "nimbus"
+version = "0.1.0"
+description = "Nimbus: a Mac cursor buddy that sees your screen, points at things, learns from tutorial videos (Shadow) and turns bug recordings into verified fixes (Repro). Built on Meta's Muse models."
+requires-python = ">=3.11"
+authors = [{ name = "Emad Qureshi" }]
+license = { text = "MIT" }
+dependencies = [
+    "PyQt6>=6.7",
+    "pyobjc-core>=10.3",
+    "pyobjc-framework-Cocoa>=10.3",
+    "pyobjc-framework-Quartz>=10.3",
+    "pyobjc-framework-AVFoundation>=10.3",
+    "pyobjc-framework-ApplicationServices>=10.3",
+    "openai>=1.60",
+    "httpx>=0.27",
+    "websockets>=13",
+    "sounddevice>=0.5",
+    "numpy>=1.26",
+    "Pillow>=10.4",
+    "python-dotenv>=1.0",
+    "pydantic>=2.8",
+    "pynput>=1.7.7",
+    "keyring>=25",
+    "playwright>=1.47",
+    "meta-sam-parser",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.3", "pytest-asyncio>=0.24"]
+
+[project.scripts]
+nimbus = "nimbus.__main__:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+markers = [
+    "live: calls the real Meta Model API (needs MODEL_API_KEY); run with -m live",
+]
+addopts = "-m 'not live'"
