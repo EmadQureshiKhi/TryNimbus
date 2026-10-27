@@ -1,0 +1,42 @@
+# Python and macOS
+*.pyc
+__pycache__/
+.pytest_cache/
+.venv/
+.DS_Store
+dist/
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Agent and editor notes
+CLAUDE.md
+AGENTS.md
+.claude/
+.kiro/
+.cursor/
+HACKATHON_BRIEF.md
+
+# Generated at run time: Repro working copies, eval reports, renders, scratch
+/runs/
+/artifacts/tmp/
+/artifacts/evals/
+/artifacts/ui/
+/artifacts/demo/
+demo/shopapp/node_modules/
+
+# Internal tooling used to make the demo film, fixtures and README art
+tools/demo-studio/
+tools/make_*.py
+tools/render_panel.py
+tools/render_overlay.py
+tools/overlay_demo.py
+tools/ui_preview.py
+
+# Demo-film-only app and its fixtures
+demo/tally/
+tools/tally_repro_check.py
+artifacts/fixtures/bug_tally_cent.*
+artifacts/fixtures/tutorial_vscode_js_indent.*
