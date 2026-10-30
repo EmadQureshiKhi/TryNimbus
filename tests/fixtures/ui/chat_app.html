@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Chat - fixture</title>
+<style>
+  :root { --bg:#faf9f5; --side:#f0eee6; --ink:#1f1e1d; --muted:#6b6a65; --line:#e3e0d6; --accent:#c96442; }
+  body.dark { --bg:#262624; --side:#1f1e1d; --ink:#f0eee6; --muted:#a6a39b; --line:#3a3936; }
+  * { box-sizing:border-box; font-family:-apple-system, "Helvetica Neue", sans-serif; }
+  body { margin:0; height:100vh; display:flex; background:var(--bg); color:var(--ink); }
+  aside { width:260px; background:var(--side); border-right:1px solid var(--line); display:flex; flex-direction:column; padding:14px 10px; gap:6px; }
+  .brand { font-weight:700; font-size:17px; padding:4px 8px 12px; }
+  button { font:inherit; cursor:pointer; }
+  #new-chat { display:flex; align-items:center; gap:8px; border:none; background:transparent; color:var(--ink); padding:8px 10px; border-radius:8px; font-size:14px; text-align:left; }
+  #new-chat .plus { width:22px; height:22px; border-radius:50%; background:var(--accent); color:white; display:grid; place-items:center; font-size:16px; }
+  #new-chat:hover, .chat:hover { background:rgba(0,0,0,.06); }
+  .section { color:var(--muted); font-size:12px; padding:14px 10px 4px; }
+  .chat { padding:7px 10px; border-radius:8px; font-size:13.5px; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .chat.active { background:rgba(0,0,0,.08); }
+  .spacer { flex:1; }
+  #account { display:flex; align-items:center; gap:10px; padding:8px; border-top:1px solid var(--line); }
+  .avatar { width:28px; height:28px; border-radius:50%; background:#4b5563; color:#fff; display:grid; place-items:center; font-size:12px; }
+  #settings { margin-left:auto; border:none; background:transparent; font-size:18px; color:var(--muted); }
+  main { flex:1; display:flex; flex-direction:column; }
+  header { height:52px; display:flex; align-items:center; justify-content:space-between; padding:0 20px; border-bottom:1px solid var(--line); }
+  #title { font-size:14px; font-weight:600; }
+  #share { border:1px solid var(--line); background:transparent; color:var(--ink); border-radius:8px; padding:6px 12px; font-size:13px; }
+  .thread { flex:1; overflow:auto; padding:30px max(40px, calc(50% - 360px)); display:flex; flex-direction:column; gap:18px; }
+  .msg.user { align-self:flex-end; background:var(--side); padding:10px 14px; border-radius:14px; max-width:70%; font-size:15px; }
+  .msg.bot { font-size:15px; line-height:1.55; max-width:100%; }
+  .composer { margin:0 auto 22px; width:min(720px, 90%); border:1px solid var(--line); border-radius:18px; background:var(--bg); box-shadow:0 2px 10px rgba(0,0,0,.05); padding:12px 14px 10px; }
+  #prompt { width:100%; border:none; outline:none; background:transparent; color:var(--ink); font-size:15px; resize:none; height:44px; }
+  .row { display:flex; align-items:center; gap:8px; }
+  #attach { border:1px solid var(--line); background:transparent; border-radius:8px; width:32px; height:32px; color:var(--muted); font-size:18px; }
+  #model-picker { margin-left:auto; border:none; background:transparent; color:var(--muted); font-size:13px; padding:6px 8px; border-radius:8px; }
+  #send { width:32px; height:32px; border-radius:9px; border:none; background:var(--accent); color:white; font-size:16px; }
+  #menu { position:absolute; display:none; background:var(--bg); border:1px solid var(--line); border-radius:10px; box-shadow:0 8px 30px rgba(0,0,0,.15); padding:6px; width:220px; }
+  #menu.open { display:block; }
+  #menu div { padding:8px 10px; border-radius:7px; font-size:13.5px; cursor:pointer; }
+  #menu div:hover { background:rgba(0,0,0,.06); }
+</style>
+</head>
+<body>
+<aside>
+  <div class="brand">Chatbook</div>
+  <button id="new-chat" aria-label="New chat"><span class="plus">+</span>New chat</button>
+  <div class="section">Recents</div>
+  <div class="chat active">Planning the Q4 launch</div>
+  <div class="chat">Explain gradient descent</div>
+  <div class="chat">Fix my Python import error</div>
+  <div class="chat">Dinner ideas for six</div>
+  <div class="chat">Resume bullet rewrite</div>
+  <div class="spacer"></div>
+  <div id="account"><div class="avatar">EQ</div><span style="font-size:13px">Emad</span><button id="settings" aria-label="Settings" title="Settings">&#9881;</button></div>
+</aside>
+<main>
+  <header><div id="title">Planning the Q4 launch</div><button id="share">Share</button></header>
+  <div class="thread" id="thread">
+    <div class="msg user">Can you draft three launch-week goals?</div>
+    <div class="msg bot">Sure. 1) Ship the onboarding flow to 100% of new users. 2) Hit 2,000 sign-ups in the first week. 3) Publish the launch post and demo video on day one.</div>
+  </div>
+  <div class="composer">
+    <textarea id="prompt" placeholder="Reply to Chatbook..."></textarea>
+    <div class="row">
+      <button id="attach" aria-label="Attach file" title="Attach">+</button>
+      <button id="model-picker" aria-label="Choose model">Muse Spark 1.2 &#9662;</button>
+      <button id="send" aria-label="Send">&#8593;</button>
+    </div>
+  </div>
+</main>
+<div id="menu"><div data-model="Muse Spark 1.3">Muse Spark 1.3</div><div data-model="Muse Spark 1.2">Muse Spark 1.2</div><div data-model="Muse Wonder">Muse Wonder</div></div>
+<script>
+  const q = new URLSearchParams(location.search);
+  if (q.get("theme") === "dark") document.body.classList.add("dark");
+  const thread = document.getElementById("thread"), title = document.getElementById("title");
+  document.getElementById("new-chat").onclick = () => { thread.innerHTML = '<div class="msg bot" style="color:var(--muted)">How can I help you today?</div>'; title.textContent = "New chat"; };
+  const menu = document.getElementById("menu"), picker = document.getElementById("model-picker");
+  picker.onclick = (e) => { const r = picker.getBoundingClientRect(); menu.style.left = (r.left - 60) + "px"; menu.style.top = (r.top - 130) + "px"; menu.classList.toggle("open"); e.stopPropagation(); };
+  menu.querySelectorAll("div").forEach(d => d.onclick = () => { picker.innerHTML = d.dataset.model + " &#9662;"; menu.classList.remove("open"); });
+  document.body.onclick = () => menu.classList.remove("open");
+  document.getElementById("send").onclick = () => { const p = document.getElementById("prompt"); if (!p.value.trim()) return; const m = document.createElement("div"); m.className = "msg user"; m.textContent = p.value; thread.appendChild(m); p.value = ""; };
+</script>
+</body>
+</html>
