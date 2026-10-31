@@ -1,0 +1,11 @@
+{
+  "name": "fieldnote-shop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Demo shop for Nimbus Repro: a static single-page store with seeded cart bugs.",
+  "type": "module",
+  "scripts": {
+    "start": "python3 -m http.server 5173 --bind 127.0.0.1",
+    "test": "node --test"
+  }
+}
