@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fieldnote Supply</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23234b3a'/%3E%3Cpath d='M9 22V10h12M9 16h9' stroke='%23f4efe6' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="styles.css" />
+    <script type="module" src="app.js"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="Fieldnote Supply home">
+        <span class="brand-mark" aria-hidden="true">F</span>
+        <span class="brand-name">Fieldnote Supply</span>
+      </a>
+      <a class="cart-link" id="cart-link" href="#cart" aria-label="Cart, 0 items">
+        <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6.2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="20" r="1.4" fill="currentColor"/><circle cx="17" cy="20" r="1.4" fill="currentColor"/></svg>
+        <span>Cart</span>
+        <span class="badge" id="cart-badge" data-testid="cart-badge">0</span>
+      </a>
+    </header>
+
+    <main class="layout">
+      <section class="catalog" aria-labelledby="catalog-title">
+        <div class="catalog-head">
+          <h1 id="catalog-title">Everyday goods, made to last</h1>
+          <p class="lede">Small-batch gear for desks, kitchens and commutes. Free shipping over $100.</p>
+        </div>
+        <ul class="grid" id="product-grid" aria-label="Products"></ul>
+      </section>
+
+      <aside class="cart" id="cart" aria-labelledby="cart-title">
+        <h2 id="cart-title">Your cart</h2>
+        <p class="empty" id="cart-empty">Your cart is empty.</p>
+        <ul class="lines" id="cart-lines" aria-label="Cart items"></ul>
+
+        <form class="discount" id="discount-form" novalidate>
+          <label for="discount-code">Discount code</label>
+          <div class="discount-row">
+            <input id="discount-code" name="discount" type="text" autocomplete="off" placeholder="e.g. SAVE10" />
+            <button type="submit" class="secondary">Apply</button>
+          </div>
+          <p class="discount-msg" id="discount-msg" role="status" aria-live="polite"></p>
+        </form>
+
+        <dl class="totals">
+          <div><dt>Subtotal</dt><dd id="cart-subtotal" data-testid="cart-subtotal">$0.00</dd></div>
+          <div><dt>Discount</dt><dd id="cart-discount" data-testid="cart-discount">-$0.00</dd></div>
+          <div class="grand"><dt>Total</dt><dd id="cart-total" data-testid="cart-total">$0.00</dd></div>
+        </dl>
+        <button type="button" class="primary checkout" id="checkout">Checkout</button>
+        <p class="note" id="checkout-note" role="status" aria-live="polite"></p>
+      </aside>
+    </main>
+  </body>
+</html>
