@@ -1,0 +1,41 @@
+{
+  "script": [
+    [
+      "#new-chat",
+      "click",
+      "",
+      "First, start a fresh conversation with the New chat button at the top of the sidebar."
+    ],
+    [
+      "#model-picker",
+      "click",
+      "",
+      "Next, open the model picker, down here next to the send button."
+    ],
+    [
+      "#menu [data-model='Muse Spark 1.3']",
+      "click",
+      "",
+      "Choose Muse Spark one point three from the list."
+    ],
+    [
+      "#prompt",
+      "type",
+      "Draft a launch tweet for Nimbus",
+      "Click the message box and type your request."
+    ],
+    [
+      "#send",
+      "click",
+      "",
+      "Finally, hit the orange send button."
+    ]
+  ],
+  "starts": [
+    1.5752526250144,
+    5.583284833992366,
+    9.514306208991911,
+    13.44837166700745,
+    19.91086295901914
+  ]
+}
