@@ -1,0 +1,64 @@
+{
+  "video": "artifacts/fixtures/bug_cart_total.mp4",
+  "url": "http://127.0.0.1:5173",
+  "duration_s": 24.56,
+  "frame_size": [
+    1280,
+    800
+  ],
+  "page_offset_y": 76,
+  "bug_time": 19.76,
+  "expected": "Two Aurora Headphones at $79.00 each make the cart total $158.00",
+  "actual": "The cart total shows $79.00 although the line shows quantity 2 and $158.00",
+  "clicks": [
+    {
+      "t": 7.6,
+      "x": 375,
+      "y": 467,
+      "target": "Add Aurora Headphones to cart"
+    },
+    {
+      "t": 10.1,
+      "x": 375,
+      "y": 467,
+      "target": "Add Aurora Headphones to cart"
+    }
+  ],
+  "beats": [
+    {
+      "say": "Okay, this is our shop, Fieldnote Supply, running locally. The cart is empty.",
+      "start": 0.98,
+      "end": 6.52,
+      "action": "none",
+      "target": ""
+    },
+    {
+      "say": "I'm adding the Aurora Headphones to the cart.",
+      "start": 6.52,
+      "end": 9.02,
+      "action": "click",
+      "target": "Add Aurora Headphones to cart"
+    },
+    {
+      "say": "Now I add the same headphones a second time.",
+      "start": 9.02,
+      "end": 11.78,
+      "action": "click",
+      "target": "Add Aurora Headphones to cart"
+    },
+    {
+      "say": "The cart line says quantity two, and a hundred and fifty-eight dollars.",
+      "start": 11.78,
+      "end": 15.77,
+      "action": "hover",
+      "target": "css=.line-total"
+    },
+    {
+      "say": "But look at the total. It still says seventy-nine dollars. It should be a hundred and fifty-eight. The total ignores the quantity.",
+      "start": 15.77,
+      "end": 23.75,
+      "action": "hover",
+      "target": "css=#cart-total"
+    }
+  ]
+}
