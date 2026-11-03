@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lisbon trip - Tally</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%234f46e5'/%3E%3Cpath d='M10 9v14M15 9v14M20 9v14M7 19l18-6' stroke='%23fff' stroke-width='2.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="styles.css" />
+    <script type="module" src="app.js"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="Tally home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="18" height="18"><path d="M10 7v18M16 7v18M22 7v18M6 20l20-8" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+        </span>
+        <span class="brand-name">Tally</span>
+      </a>
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <span>Groups</span>
+        <span aria-hidden="true" class="sep">/</span>
+        <span class="current" aria-current="page">Lisbon trip</span>
+      </nav>
+      <div class="me" aria-label="Signed in as Alex">
+        <span class="avatar small" style="--hue: 248" aria-hidden="true">A</span>
+      </div>
+    </header>
+
+    <main class="page">
+      <section class="group-head" aria-labelledby="group-title">
+        <div class="group-cover" aria-hidden="true">
+          <svg viewBox="0 0 48 48" width="28" height="28"><path d="M6 34h36M10 34V22l8-6 8 6v12M26 34V16l8-5 6 5v18M15 34v-6h6v6" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linejoin="round" stroke-linecap="round"/></svg>
+        </div>
+        <div class="group-text">
+          <h1 id="group-title">Lisbon trip</h1>
+          <p class="group-meta"><span id="member-names">Alex, Sam and Jo</span> &middot; Oct 24 - Oct 30</p>
+        </div>
+        <ul class="faces" id="faces" aria-label="Members"></ul>
+        <div class="stat">
+          <span class="stat-label">Total spent</span>
+          <span class="stat-value" id="total-spent" data-testid="total-spent">$0.00</span>
+        </div>
+      </section>
+
+      <div class="columns">
+        <div class="col-main">
+          <section class="card" aria-labelledby="add-title">
+            <div class="card-head">
+              <h2 id="add-title">Add expense</h2>
+              <span class="hint">Split equally between everyone</span>
+            </div>
+            <form class="expense-form" id="expense-form" novalidate>
+              <div class="field grow">
+                <label for="description">Description</label>
+                <input id="description" name="description" type="text" autocomplete="off" placeholder="e.g. Dinner at Taberna" />
+              </div>
+              <div class="field amount">
+                <label for="amount">Amount</label>
+                <div class="money-input">
+                  <span aria-hidden="true">$</span>
+                  <input id="amount" name="amount" type="text" inputmode="decimal" autocomplete="off" placeholder="0.00" />
+                </div>
+              </div>
+              <div class="field payer">
+                <label for="paid-by">Paid by</label>
+                <select id="paid-by" name="paid-by"></select>
+              </div>
+              <button type="submit" class="primary" id="add-expense">Add expense</button>
+            </form>
+            <p class="form-error" id="form-error" role="alert"></p>
+          </section>
+
+          <section class="card" aria-labelledby="expenses-title">
+            <div class="card-head">
+              <h2 id="expenses-title">Expenses</h2>
+              <span class="hint" id="expense-count">No expenses</span>
+            </div>
+            <ul class="activity" id="activity" aria-label="Expenses and payments"></ul>
+            <div class="empty" id="activity-empty">
+              <p class="empty-title">No expenses yet</p>
+              <p>Add the first one above and Tally keeps track of who owes what.</p>
+            </div>
+          </section>
+        </div>
+
+        <aside class="col-side">
+          <section class="card balances" aria-labelledby="balances-title">
+            <div class="card-head">
+              <h2 id="balances-title">Balances</h2>
+            </div>
+            <ul class="balance-list" id="balance-list" aria-label="Balances"></ul>
+
+            <div class="settle-plan" id="settle-plan">
+              <p class="plan-title">Suggested payments</p>
+              <ul id="suggested" aria-label="Suggested payments"></ul>
+            </div>
+
+            <div class="settled" id="settled" role="status" hidden>
+              <span class="settled-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <div>
+                <p class="settled-title">All settled up</p>
+                <p class="settled-text">Everyone is square. Nice trip!</p>
+              </div>
+            </div>
+
+            <button type="button" class="primary wide" id="settle-up">Settle up</button>
+          </section>
+        </aside>
+      </div>
+    </main>
+  </body>
+</html>
