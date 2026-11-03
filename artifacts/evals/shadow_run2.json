@@ -1,0 +1,81 @@
+{
+  "summary": {
+    "steps_found": "6 (script 5)",
+    "pointing_hits": "4/6",
+    "false_passes_blocked": "6/6",
+    "real_completions_verified": "3/6",
+    "focus_only_assumed": 1,
+    "analyze_seconds": 19.7
+  },
+  "plan_steps": 6,
+  "script_steps": 5,
+  "analyze_s": 19.7,
+  "scores": [
+    {
+      "index": 0,
+      "instruction": "First, start a fresh conversation with the sidebar.",
+      "expected_selector": "#new-chat",
+      "pointed": true,
+      "point_hit": true,
+      "negative_check_held": true,
+      "positive_check_passed": true,
+      "evidence": "Header changed from 'Planning the Q4 launch' to 'New chat' and main panel cleared of prior goals conversation, now showing 'How can I help you today?' with empty 'Reply to Chatbook...' input",
+      "assumed": false
+    },
+    {
+      "index": 1,
+      "instruction": "Next, open the model picker down here next to the send button.",
+      "expected_selector": "#model-picker",
+      "pointed": true,
+      "point_hit": true,
+      "negative_check_held": true,
+      "positive_check_passed": true,
+      "evidence": "AFTER shows a small dropdown menu directly above the 'Muse Spark 1.2' picker next to the send button listing 'Muse Spark 1.3', 'Muse Spark 1.2', 'Muse Wonder', which was absent in BEFORE",
+      "assumed": false
+    },
+    {
+      "index": 2,
+      "instruction": "Choose Muse Spark 1.3 from the list.",
+      "expected_selector": "(none)",
+      "pointed": false,
+      "point_hit": false,
+      "negative_check_held": true,
+      "positive_check_passed": false,
+      "evidence": "AFTER still shows the model dropdown open with options listed and the control still reads 'Muse Spark 1.2', identical to BEFORE, with no change to 'Muse Spark 1.3'",
+      "assumed": false
+    },
+    {
+      "index": 3,
+      "instruction": "Click the message box and type your request.",
+      "expected_selector": "#prompt",
+      "pointed": true,
+      "point_hit": true,
+      "negative_check_held": true,
+      "positive_check_passed": true,
+      "evidence": "AFTER image still shows empty input with placeholder 'Reply to Chatbook...' visible and no typed text or caret",
+      "assumed": true
+    },
+    {
+      "index": 4,
+      "instruction": "Click the message box and type your request.",
+      "expected_selector": "#prompt",
+      "pointed": true,
+      "point_hit": true,
+      "negative_check_held": true,
+      "positive_check_passed": true,
+      "evidence": "Bottom input field changed from placeholder 'Reply to Chatbook...' in BEFORE to containing 'Draft a launch tweet for Nimbus.' in AFTER",
+      "assumed": false
+    },
+    {
+      "index": 5,
+      "instruction": "Finally, hit the orange send button.",
+      "expected_selector": "#model-picker",
+      "pointed": true,
+      "point_hit": false,
+      "negative_check_held": true,
+      "positive_check_passed": false,
+      "evidence": "AFTER still shows 'Draft a launch tweet for Nimbus.' in the input field with no user bubble top-right, and a model dropdown listing Muse Spark 1.3/1.2/Wonder is open",
+      "assumed": false
+    }
+  ]
+}

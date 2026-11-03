@@ -1,0 +1,81 @@
+{
+  "summary": {
+    "steps_found": "6 (script 5)",
+    "pointing_hits": "6/6",
+    "false_passes_blocked": "6/6",
+    "real_completions_verified": "5/6",
+    "focus_only_assumed": 1,
+    "analyze_seconds": 19.5
+  },
+  "plan_steps": 6,
+  "script_steps": 5,
+  "analyze_s": 19.5,
+  "scores": [
+    {
+      "index": 0,
+      "instruction": "Click 'New chat' button at top of left sidebar - white button with plus icon, black text 'New chat', directly under orange 'Chatbook' logo and above 'Recents' section",
+      "expected_selector": "#new-chat",
+      "pointed": true,
+      "point_hit": true,
+      "negative_check_held": true,
+      "positive_check_passed": true,
+      "evidence": "AFTER header changed from 'Planning the Q4 launch' to 'New chat' and center now shows 'How can I help you today?' with previous launch-goals conversation gone",
+      "assumed": false
+    },
+    {
+      "index": 1,
+      "instruction": "Click the model picker control at bottom-right of chat input bar - text 'Muse Spark 1.3' with small down-arrow, immediately left of the orange send button",
+      "expected_selector": "#model-picker",
+      "pointed": true,
+      "point_hit": true,
+      "negative_check_held": true,
+      "positive_check_passed": true,
+      "evidence": "AFTER image shows a dropdown menu opened above the bottom-right model selector listing 3 options: Muse Spark 1.3, Muse Spark 1.2, Muse Wonder",
+      "assumed": false
+    },
+    {
+      "index": 2,
+      "instruction": "Choose 'Muse Spark 1.3' - first/top item in the open dropdown list",
+      "expected_selector": "#menu [data-model='Muse Spark 1.3']",
+      "pointed": true,
+      "point_hit": true,
+      "negative_check_held": true,
+      "positive_check_passed": true,
+      "evidence": "Open dropdown listing Muse Spark 1.3/1.2/Wonder in BEFORE is closed in AFTER and bottom-right control changed from 'Muse Spark 1.2' to 'Muse Spark 1.3'",
+      "assumed": false
+    },
+    {
+      "index": 3,
+      "instruction": "Click inside the main message/composer box at bottom center that says 'Reply to Chatbook...'",
+      "expected_selector": "#prompt",
+      "pointed": true,
+      "point_hit": true,
+      "negative_check_held": true,
+      "positive_check_passed": true,
+      "evidence": "AFTER image is identical to BEFORE: bottom composer still shows placeholder 'Reply to Chatbook...' with no visible text cursor, highlight, or focus change",
+      "assumed": true
+    },
+    {
+      "index": 4,
+      "instruction": "Type exactly: Draft a launch tweet for Nimbus",
+      "expected_selector": "#prompt",
+      "pointed": true,
+      "point_hit": true,
+      "negative_check_held": true,
+      "positive_check_passed": true,
+      "evidence": "Bottom input field changed from placeholder 'Reply to Chatbook...' in BEFORE to containing 'Draft a launch tweet for Nimbus' in AFTER",
+      "assumed": false
+    },
+    {
+      "index": 5,
+      "instruction": "Hit the orange send button at the far right end of the input bar",
+      "expected_selector": "#send",
+      "pointed": true,
+      "point_hit": true,
+      "negative_check_held": true,
+      "positive_check_passed": true,
+      "evidence": "AFTER shows right-aligned bubble at top with text 'Draft a launch tweet for Nimbus' and input bar cleared to placeholder 'Reply to Chatbook...'",
+      "assumed": false
+    }
+  ]
+}
