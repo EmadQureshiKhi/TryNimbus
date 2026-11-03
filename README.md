@@ -32,13 +32,14 @@
 <br>
 **Hand it a narrated bug recording and it reproduces the bug, fixes it with Muse Code, and proves the fix.**
 
-[Demo](#demo) · [What it does](#what-it-does) · [How it works](#how-it-works) · [Why Meta's models](#why-metas-models) · [Results](#results) · [Technical details](#technical-details) · [Run it locally](#run-it-locally)
+[Download](#download-the-app) · [Demo](#demo) · [What it does](#what-it-does) · [How it works](#how-it-works) · [Why Meta's models](#why-metas-models) · [Results](#results) · [Technical details](#technical-details) · [Run it locally](#run-it-locally)
 
 </div>
 
 ## Demo
 
 [![Watch the demo](https://img.shields.io/badge/%E2%96%B6_Watch_the_demo-coming_soon-FF7A1A?style=for-the-badge)](#demo)
+[![Download for Mac](https://img.shields.io/badge/Download_for_Mac-Apple_silicon-131316?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/EmadQureshiKhi/TryNimbus/releases/latest)
 
 <!-- Demo video: replace #demo above with the YouTube link once the video is uploaded. -->
 
@@ -214,6 +215,18 @@ Shadow runs a negative check first (nothing happened, so nothing may pass), and 
 All of them run headless: no windows, no sound, no mouse or keyboard, safe while the Mac is in use.
 
 ## Run it locally
+
+### Download the app
+
+The quickest way to try Nimbus is the ready-made app for Apple silicon Macs (macOS 13 or later), with Python and every dependency inside.
+
+1. Download `Nimbus-0.1.0-arm64.dmg` from the [latest release](https://github.com/EmadQureshiKhi/TryNimbus/releases/latest), open it and drag **Nimbus** to **Applications**.
+2. The app is not notarized, so open it the first time with right-click > **Open** > **Open**. On macOS 15 and later, open it once, then click **Open Anyway** in System Settings > Privacy & Security.
+3. Nimbus opens on its Settings page: paste your Meta Model API key there (it is kept in the macOS Keychain).
+4. Allow **Screen Recording**, **Accessibility**, **Microphone** and **Input Monitoring** when asked, then quit and reopen Nimbus once so Screen Recording takes effect.
+
+Repro also needs Google Chrome (or Playwright's Chromium) and, for the project it fixes, git and Node.js.
+To build the same disk image yourself, run `scripts/build_release.sh`.
 
 ### Requirements
 
