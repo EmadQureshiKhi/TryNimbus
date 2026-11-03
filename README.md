@@ -54,7 +54,7 @@ Everything in the video is the real app on Meta's models, recorded live:
 
 ## At a glance
 
-| | |
+| | Nimbus |
 |---|---|
 | **What it is** | A native macOS assistant that lives beside your cursor, sees your screen, and *shows* you what to do instead of telling you. |
 | **Who it helps** | Anyone stuck in an unfamiliar interface, anyone following a tutorial made for a different version, and every team that receives bug reports nobody can reproduce. |
@@ -152,15 +152,15 @@ Each step says what was done, on which control, what the control looked like, an
 Nimbus runs only on Meta's models, through the Meta Model API (`https://api.meta.ai/v1`) and Muse Code.
 Each one does something the product could not do without it.
 
-| Model | Id | What it does in Nimbus | Why this model | Code |
-|---|---|---|---|---|
-| **Muse Spark 1.3** | `muse-spark-1.3` | Answers and plans walkthroughs from screenshots, points at controls, verifies every step, drives computer use | Its 0-1000 grounding grid makes pointing resolution-independent across Retina displays. Strict JSON schemas keep every answer machine-checkable. | [`ask.py`](nimbus/ask.py), [`grounding.py`](nimbus/engine/grounding.py), [`verify.py`](nimbus/engine/verify.py) |
-| **Muse Spark 1.2** | `muse-spark-1.2` | Watches narrated tutorial and bug videos and writes the step plan | Reads video *and its audio track* in one call, so what was said at each step lands in the plan. 1M context holds a long tutorial whole. | [`video.py`](nimbus/engine/video.py) |
-| **SAM 3.1** | `sam-3.1` | Tracks the presenter's mouse cursor through a recording, then segments the control under each click | Clicks happen where the cursor comes to rest, so tracking it gives the *measured* click point. The segmented crop is the visual reference Shadow uses on a screen that looks different. | [`sam.py`](nimbus/meta/sam.py), [`video.py`](nimbus/engine/video.py) |
-| **Muse Voice Transcribe** | `muse-voice-transcribe-1.0` | Push-to-talk questions | Realtime WebSocket, so the transcript is ready the moment you release the key. | [`voice.py`](nimbus/meta/voice.py) |
-| **Muse Code** | `muse exec` | Repro's fixer: confirms the root cause, writes a failing regression test, fixes, runs the tests | Runs headless inside its own sandbox, scoped to the repository, with the key passed on stdin. Nimbus then re-checks everything itself. | [`fixer.py`](nimbus/repro/fixer.py) |
-| **Muse Wonder** | `muse-wonder-1.0` | Second model in the computer-use and coding-agent fallback chains | Built for long-running agents and error recovery, so a task survives a failing first model. | [`config.py`](nimbus/config.py), [`computer.py`](nimbus/meta/computer.py) |
-| **Muse Spark Open** (optional) | via Baseten | Step verification and bug analysis on open weights | Same client and harness, swappable endpoint, one switch in Settings. | [`config.py`](nimbus/config.py) |
+| Model | What it does in Nimbus | Why this model |
+|---|---|---|
+| **Muse Spark 1.3**<br>`muse-spark-1.3`<br>[`ask.py`](nimbus/ask.py), [`grounding.py`](nimbus/engine/grounding.py), [`verify.py`](nimbus/engine/verify.py) | Answers and plans walkthroughs from screenshots, points at controls, verifies every step, drives computer use | Its 0-1000 grounding grid makes pointing resolution-independent across Retina displays. Strict JSON schemas keep every answer machine-checkable. |
+| **Muse Spark 1.2**<br>`muse-spark-1.2`<br>[`video.py`](nimbus/engine/video.py) | Watches narrated tutorial and bug videos and writes the step plan | Reads video *and its audio track* in one call, so what was said at each step lands in the plan. 1M context holds a long tutorial whole. |
+| **SAM 3.1**<br>`sam-3.1`<br>[`sam.py`](nimbus/meta/sam.py), [`video.py`](nimbus/engine/video.py) | Tracks the presenter's mouse cursor through a recording, then segments the control under each click | Clicks happen where the cursor comes to rest, so tracking it gives the *measured* click point. The segmented crop is the visual reference Shadow uses on a screen that looks different. |
+| **Muse Voice Transcribe**<br>`muse-voice-transcribe-1.0`<br>[`voice.py`](nimbus/meta/voice.py) | Push-to-talk questions | Realtime WebSocket, so the transcript is ready the moment you release the key. |
+| **Muse Code**<br>`muse exec`<br>[`fixer.py`](nimbus/repro/fixer.py) | Repro's fixer: confirms the root cause, writes a failing regression test, fixes, runs the tests | Runs headless inside its own sandbox, scoped to the repository, with the key passed on stdin. Nimbus then re-checks everything itself. |
+| **Muse Wonder**<br>`muse-wonder-1.0`<br>[`config.py`](nimbus/config.py), [`computer.py`](nimbus/meta/computer.py) | Second model in the computer-use and coding-agent fallback chains | Built for long-running agents and error recovery, so a task survives a failing first model. |
+| **Muse Spark Open** (optional)<br>via Baseten<br>[`config.py`](nimbus/config.py) | Step verification and bug analysis on open weights | Same client and harness, swappable endpoint, one switch in Settings. |
 
 ### Capabilities put to work in new ways
 
@@ -383,7 +383,7 @@ To build the same disk image yourself, run `scripts/build_release.sh`.
 
 ## Hackathon
 
-| | |
+| | Entry |
 |---|---|
 | **Event** | [Meta Global AI Developer Hackathon](https://cerebralvalley.ai/e/meta-ai-developer-hackathon), October 26 to November 4, 2026 |
 | **Track** | Indie Developer |
