@@ -28,6 +28,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=8.3", "pytest-asyncio>=0.24"]
+release = ["pyinstaller>=6.10"]
 
 [project.scripts]
 nimbus = "nimbus.__main__:main"
