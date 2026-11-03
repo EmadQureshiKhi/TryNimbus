@@ -9,6 +9,7 @@ from __future__ import annotations
 import asyncio
 import html
 import logging
+import os
 import subprocess
 import time
 from pathlib import Path
@@ -93,13 +94,16 @@ class NimbusApp:
         self.panel.place_tab()
         self._refresh_status()
         self._refresh_recent_guides()
-        try:
-            self.hotkey.start()
-            self.clicks.start()
-        except Exception as exc:
-            log.warning("global input listeners unavailable: %s", exc)
-            self.overlay.toast("Global hotkey unavailable. Allow Input Monitoring for this app, or type in the panel.",
-                               "error", 8)
+        if os.environ.get("NIMBUS_NO_GLOBAL_INPUT"):  # headless checks of the packaged app: no event taps, no prompts
+            log.info("global input listeners off (NIMBUS_NO_GLOBAL_INPUT)")
+        else:
+            try:
+                self.hotkey.start()
+                self.clicks.start()
+            except Exception as exc:
+                log.warning("global input listeners unavailable: %s", exc)
+                self.overlay.toast("Global hotkey unavailable. Allow Input Monitoring for this app, or type in the panel.",
+                                   "error", 8)
         if not self.client.has_key():
             self.panel.open()
             self.panel.show_page(3)
