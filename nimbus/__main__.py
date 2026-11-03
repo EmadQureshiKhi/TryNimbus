@@ -25,8 +25,17 @@ def _setup_logging() -> None:
     sys.excepthook = lambda kind, exc, tb: log.critical("uncaught exception", exc_info=(kind, exc, tb))
 
 
+def _extend_path() -> None:
+    """Apps opened from Finder get a bare PATH; Repro's start and test commands need git, node, python3."""
+    path = os.environ.get("PATH", "/usr/bin:/bin:/usr/sbin:/sbin").split(os.pathsep)
+    extra = [d for d in ("/opt/homebrew/bin", "/usr/local/bin", os.path.expanduser("~/.local/bin"))
+             if d not in path and os.path.isdir(d)]
+    os.environ["PATH"] = os.pathsep.join(path + extra)
+
+
 def main() -> None:
     _setup_logging()
+    _extend_path()
     from PyQt6.QtCore import QTimer
     from PyQt6.QtWidgets import QApplication
 
