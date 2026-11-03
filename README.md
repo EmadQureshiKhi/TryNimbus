@@ -22,7 +22,7 @@
 [![macOS 13+](https://img.shields.io/badge/macOS-13%2B-131316?style=flat-square&logo=apple&logoColor=white)](#run-it-locally)
 [![Python 3.12](https://img.shields.io/badge/Python-3.12-131316?style=flat-square&logo=python&logoColor=white)](#run-it-locally)
 [![License: MIT](https://img.shields.io/badge/License-MIT-131316?style=flat-square)](LICENSE)
-[![Tests](https://img.shields.io/badge/offline_tests-184_passing-2E7D5B?style=flat-square)](#tests-evals-and-harnesses)
+[![Tests](https://img.shields.io/badge/offline_tests-186_passing-2E7D5B?style=flat-square)](#tests-evals-and-harnesses)
 [![Pointing](https://img.shields.io/badge/pointing_on_live_web_apps-10%2F10-2E7D5B?style=flat-square)](#results)
 [![Repro](https://img.shields.io/badge/Repro_end_to_end-19%2F19_checks-2E7D5B?style=flat-square)](#results)
 
@@ -145,7 +145,7 @@ The scripts are in [`tools/`](tools); each writes its raw results to `artifacts/
 | **Repro in the real app**, end to end: narrated bug video → reproduction → Muse Code fix → re-verified → report | **19 / 19** checks; recording to verified fix in about **80 s**; the fix is the one-line root cause, and its new regression test fails on the old code |
 | **Repro with the built-in Muse Spark fixer** (Muse Code not installed) | **3 / 3** consecutive runs, about 2 minutes each |
 | **No overlaps**: every frame of real walkthroughs painted exactly as on screen, checked for overlapping text, covered targets and anything off screen | **9 / 9** walkthroughs clean across **40** frames |
-| **Offline test suite** (models faked) | **184** passing |
+| **Offline test suite** (models faked) | **186** passing |
 
 Perceived latency: Nimbus starts speaking on the first answer while the zoomed second look sharpens the points in the background, so the buddy moves as it starts to talk.
 
@@ -204,7 +204,7 @@ Shadow runs a negative check first (nothing happened, so nothing may pass), and 
 
 | Command | What it proves | Needs the key |
 |---|---|---|
-| `.venv/bin/python -m pytest` | 184 offline tests with faked models: retries, coordinate mapping, layout stress cases, the Shadow state machine, the Repro sandbox, executor and fixer rules | no |
+| `.venv/bin/python -m pytest` | 186 offline tests with faked models: retries, coordinate mapping, layout stress cases, the Shadow state machine, the Repro sandbox, executor and fixer rules | no |
 | `.venv/bin/python tools/eval_pointing.py [--web]` | Pointing hit rate against DOM ground truth, on fixture apps or live public sites | yes |
 | `.venv/bin/python tools/eval_shadow.py` | Learn a tutorial video, then guide a simulated person through it in a different theme | yes |
 | `.venv/bin/python tools/shadow_e2e.py` | The real Nimbus app, offscreen, guiding a person through a tutorial in headless Chromium | yes |
