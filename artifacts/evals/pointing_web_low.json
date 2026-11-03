@@ -1,0 +1,128 @@
+{
+  "summary": {
+    "web_pointing_hit_rate": "10/10",
+    "median_latency_s": 8.25
+  },
+  "results": [
+    {
+      "page": "https://github.com/meta-models/meta-model-cookbook",
+      "question": "How do I download this code?",
+      "target": "dom",
+      "hit": true,
+      "distance_px": 0.3,
+      "refined": true,
+      "latency_s": 13.08,
+      "reply": "Click the green Code button to download this repo. I'll show you where it is.",
+      "steps": 2,
+      "error": ""
+    },
+    {
+      "page": "https://github.com/meta-models/meta-model-cookbook",
+      "question": "Where can I see the open issues?",
+      "target": "dom",
+      "hit": true,
+      "distance_px": 6.0,
+      "refined": true,
+      "latency_s": 9.2,
+      "reply": "You can see all 17 open issues under the Issues tab at the top of this repo.",
+      "steps": 1,
+      "error": ""
+    },
+    {
+      "page": "https://en.wikipedia.org/wiki/Python_(programming_language)",
+      "question": "How do I read this article in another language?",
+      "target": "dom",
+      "hit": true,
+      "distance_px": 13.7,
+      "refined": true,
+      "latency_s": 8.4,
+      "reply": "You can read this in another language right from the top of the page. Let me show you where.",
+      "steps": 1,
+      "error": ""
+    },
+    {
+      "page": "https://en.wikipedia.org/wiki/Python_(programming_language)",
+      "question": "Where can I see the edit history?",
+      "target": "dom",
+      "hit": true,
+      "distance_px": 2.4,
+      "refined": true,
+      "latency_s": 7.9,
+      "reply": "You can see it right at the top of the article. I will point to the tab for you.",
+      "steps": 1,
+      "error": ""
+    },
+    {
+      "page": "https://excalidraw.com",
+      "question": "Which tool draws a rectangle?",
+      "target": "dom",
+      "hit": true,
+      "distance_px": 2.8,
+      "refined": true,
+      "latency_s": 8.55,
+      "reply": "It's the little square in the top toolbar.",
+      "steps": 1,
+      "error": ""
+    },
+    {
+      "page": "https://excalidraw.com",
+      "question": "How do I add text to the canvas?",
+      "target": "dom",
+      "hit": true,
+      "distance_px": 1.3,
+      "refined": true,
+      "latency_s": 10.82,
+      "reply": "Easy, grab the Text tool first, then click anywhere to type.",
+      "steps": 2,
+      "error": ""
+    },
+    {
+      "page": "https://excalidraw.com",
+      "question": "Where's the main menu to export my drawing?",
+      "target": "dom",
+      "hit": true,
+      "distance_px": 1.4,
+      "refined": true,
+      "latency_s": 7.45,
+      "reply": "It's that little menu button in the top left. I'll point it out for you.",
+      "steps": 1,
+      "error": ""
+    },
+    {
+      "page": "https://vscode.dev",
+      "question": "How do I open the extensions marketplace?",
+      "target": "dom",
+      "hit": true,
+      "distance_px": 1.2,
+      "refined": true,
+      "latency_s": 8.11,
+      "reply": "Click the Extensions icon on the left side to open the extensions marketplace.",
+      "steps": 1,
+      "error": ""
+    },
+    {
+      "page": "https://vscode.dev",
+      "question": "Where do I search across files?",
+      "target": "dom",
+      "hit": true,
+      "distance_px": 7.6,
+      "refined": true,
+      "latency_s": 8.06,
+      "reply": "You search across files with the Search view on the left. It is the magnifying glass right under Explorer.",
+      "steps": 1,
+      "error": ""
+    },
+    {
+      "page": "https://vscode.dev",
+      "question": "Where is the file explorer?",
+      "target": "dom",
+      "hit": true,
+      "distance_px": 9.3,
+      "refined": true,
+      "latency_s": 7.47,
+      "reply": "It is already open on the left side of the window. Let me show you exactly where.",
+      "steps": 2,
+      "error": ""
+    }
+  ]
+}
