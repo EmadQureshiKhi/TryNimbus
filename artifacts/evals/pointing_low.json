@@ -1,0 +1,179 @@
+{
+  "summary": {
+    "refine": true,
+    "pointing_hit_rate": "11/12",
+    "math_anchored": "1/2",
+    "median_distance_to_center_px": 11.1,
+    "median_latency_s": 7.12
+  },
+  "results": [
+    {
+      "page": "chat_app.html",
+      "question": "How do I start a new chat?",
+      "target": "#new-chat",
+      "hit": true,
+      "distance_px": 65.6,
+      "refined": true,
+      "latency_s": 8.4,
+      "reply": "It's right at the top of your sidebar. Let me show you.",
+      "steps": 1,
+      "error": ""
+    },
+    {
+      "page": "chat_app.html?theme=dark",
+      "question": "how do i open a new conversation here",
+      "target": "#new-chat",
+      "hit": true,
+      "distance_px": 65.6,
+      "refined": true,
+      "latency_s": 6.7,
+      "reply": "Just click New chat at the top left and you will get a fresh conversation.",
+      "steps": 1,
+      "error": ""
+    },
+    {
+      "page": "chat_app.html",
+      "question": "Where do I switch which model I'm using?",
+      "target": "#model-picker",
+      "hit": true,
+      "distance_px": 2.6,
+      "refined": true,
+      "latency_s": 7.41,
+      "reply": "You switch it right in the reply box at the bottom, it says Muse Spark 1.2 right now.",
+      "steps": 1,
+      "error": ""
+    },
+    {
+      "page": "chat_app.html",
+      "question": "Where are the settings?",
+      "target": "#settings",
+      "hit": true,
+      "distance_px": 15.3,
+      "refined": true,
+      "latency_s": 8.53,
+      "reply": "Found them. Look down at the bottom left next to your name.",
+      "steps": 1,
+      "error": ""
+    },
+    {
+      "page": "chat_app.html",
+      "question": "How do I attach a file?",
+      "target": "#attach",
+      "hit": true,
+      "distance_px": 1.8,
+      "refined": true,
+      "latency_s": 6.72,
+      "reply": "You attach right from the reply box at the bottom. Let me show you the button.",
+      "steps": 1,
+      "error": ""
+    },
+    {
+      "page": "chat_app.html",
+      "question": "How can I share this conversation?",
+      "target": "#share",
+      "hit": true,
+      "distance_px": 7.7,
+      "refined": true,
+      "latency_s": 7.12,
+      "reply": "You can share it right from the top of this chat. Let me point to the button.",
+      "steps": 1,
+      "error": ""
+    },
+    {
+      "page": "video_editor.html",
+      "question": "Where's the blade tool to cut a clip?",
+      "target": "#blade",
+      "hit": true,
+      "distance_px": 7.2,
+      "refined": true,
+      "latency_s": 7.0,
+      "reply": "It's right above your timeline on the left \u2014 that little scissors icon is the blade to cut a clip.",
+      "steps": 1,
+      "error": ""
+    },
+    {
+      "page": "video_editor.html",
+      "question": "How do I get to the color grading page?",
+      "target": "#tab-color",
+      "hit": true,
+      "distance_px": 1.4,
+      "refined": true,
+      "latency_s": 6.31,
+      "reply": "You're on the Edit page right now. The color grading is on the Color page just one click away.",
+      "steps": 1,
+      "error": ""
+    },
+    {
+      "page": "video_editor.html",
+      "question": "Where do I go to export my video?",
+      "target": "#tab-deliver",
+      "hit": true,
+      "distance_px": 14.4,
+      "refined": true,
+      "latency_s": 8.6,
+      "reply": "To export, you want the Deliver page. That's where all the render settings live.",
+      "steps": 2,
+      "error": ""
+    },
+    {
+      "page": "video_editor.html",
+      "question": "How do I add a marker on the timeline?",
+      "target": "#marker",
+      "hit": false,
+      "distance_px": 36.4,
+      "refined": true,
+      "latency_s": 10.39,
+      "reply": "Easy, you drop a marker right where that red playhead is. I'll show you the button and the menu way.",
+      "steps": 3,
+      "error": ""
+    },
+    {
+      "page": "video_editor.html",
+      "question": "Where can I see the render queue?",
+      "target": "#render-queue",
+      "hit": true,
+      "distance_px": 0.3,
+      "refined": true,
+      "latency_s": 5.95,
+      "reply": "It's right up at the top. Let me show you.",
+      "steps": 1,
+      "error": ""
+    },
+    {
+      "page": "video_editor.html",
+      "question": "Where do I change a clip's opacity?",
+      "target": "#inspector",
+      "hit": true,
+      "distance_px": 203.7,
+      "refined": true,
+      "latency_s": 7.13,
+      "reply": "It's in the Inspector on the right. First select your clip in the timeline, then change the Opacity value there.",
+      "steps": 1,
+      "error": ""
+    },
+    {
+      "page": "whiteboard.html",
+      "question": "Solve problem 1 step by step",
+      "target": "#eq1",
+      "hit": true,
+      "distance_px": 0.0,
+      "refined": false,
+      "latency_s": 6.68,
+      "reply": "Got it, let's solve problem 1 together step by step.",
+      "steps": 4,
+      "error": ""
+    },
+    {
+      "page": "whiteboard.html",
+      "question": "Walk me through solving problem 2",
+      "target": "#eq2",
+      "hit": false,
+      "distance_px": -1.0,
+      "refined": false,
+      "latency_s": 8.41,
+      "reply": "Got it, lets solve that quadratic together. I will walk you through it step by step.",
+      "steps": 4,
+      "error": ""
+    }
+  ]
+}
