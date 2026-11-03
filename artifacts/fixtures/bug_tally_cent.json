@@ -1,0 +1,197 @@
+{
+  "video": "artifacts/fixtures/bug_tally_cent.mp4",
+  "url": "http://127.0.0.1:5174",
+  "duration_s": 32.32,
+  "frame_size": [
+    1280,
+    800
+  ],
+  "page_offset_y": 76,
+  "bug_time": 28.33,
+  "expected": "After Settle up every balance is zero and the Balances card says All settled up",
+  "actual": "After Settle up Alex is still owed $0.01 and All settled up never appears, because a $100.00 expense split three ways gives three $33.33 shares that add up to $99.99",
+  "actions": [
+    {
+      "kind": "type",
+      "target": "label:Description",
+      "x": 175,
+      "y": 335,
+      "t": 8.17,
+      "text": "Dinner"
+    },
+    {
+      "kind": "type",
+      "target": "label:Amount",
+      "x": 478,
+      "y": 335,
+      "t": 10.27,
+      "text": "100"
+    },
+    {
+      "kind": "select",
+      "target": "label:Paid by",
+      "x": 604,
+      "y": 335,
+      "t": 11.99,
+      "text": "Alex"
+    },
+    {
+      "kind": "click",
+      "target": "button:Add expense",
+      "x": 741,
+      "y": 335,
+      "t": 13.99
+    },
+    {
+      "kind": "hover",
+      "target": "css=[data-member=alex] .balance-desc",
+      "x": 1033,
+      "y": 330,
+      "t": 16.75
+    },
+    {
+      "kind": "hover",
+      "target": "css=[data-member=jo] .balance-desc",
+      "x": 1017,
+      "y": 458,
+      "t": 18.0
+    },
+    {
+      "kind": "click",
+      "target": "button:Settle up",
+      "x": 1018,
+      "y": 631,
+      "t": 23.07
+    },
+    {
+      "kind": "hover",
+      "target": "css=[data-member=alex] .balance-desc",
+      "x": 1024,
+      "y": 330,
+      "t": 26.15
+    }
+  ],
+  "clicks": [
+    {
+      "kind": "type",
+      "target": "label:Description",
+      "x": 175,
+      "y": 335,
+      "t": 8.17,
+      "text": "Dinner"
+    },
+    {
+      "kind": "type",
+      "target": "label:Amount",
+      "x": 478,
+      "y": 335,
+      "t": 10.27,
+      "text": "100"
+    },
+    {
+      "kind": "select",
+      "target": "label:Paid by",
+      "x": 604,
+      "y": 335,
+      "t": 11.99,
+      "text": "Alex"
+    },
+    {
+      "kind": "click",
+      "target": "button:Add expense",
+      "x": 741,
+      "y": 335,
+      "t": 13.99
+    },
+    {
+      "kind": "click",
+      "target": "button:Settle up",
+      "x": 1018,
+      "y": 631,
+      "t": 23.07
+    }
+  ],
+  "beats": [
+    {
+      "say": "Okay, quick bug in Tally. This is our Lisbon trip group, with Alex, Sam and Jo.",
+      "start": 1.0,
+      "end": 6.87,
+      "acts": []
+    },
+    {
+      "say": "We had dinner, a hundred dollars, and Alex paid.",
+      "start": 6.87,
+      "end": 12.35,
+      "acts": [
+        {
+          "kind": "type",
+          "target": "label:Description",
+          "text": "Dinner"
+        },
+        {
+          "kind": "type",
+          "target": "label:Amount",
+          "text": "100"
+        },
+        {
+          "kind": "select",
+          "target": "label:Paid by",
+          "text": "Alex"
+        }
+      ]
+    },
+    {
+      "say": "I'll add it, split three ways.",
+      "start": 12.35,
+      "end": 14.58,
+      "acts": [
+        {
+          "kind": "click",
+          "target": "button:Add expense",
+          "text": ""
+        }
+      ]
+    },
+    {
+      "say": "Balances look right. Alex is owed sixty six sixty seven, and Sam and Jo owe thirty three thirty three each.",
+      "start": 14.58,
+      "end": 21.19,
+      "acts": [
+        {
+          "kind": "hover",
+          "target": "css=[data-member=alex] .balance-desc",
+          "text": ""
+        },
+        {
+          "kind": "hover",
+          "target": "css=[data-member=jo] .balance-desc",
+          "text": ""
+        }
+      ]
+    },
+    {
+      "say": "Now I hit Settle up, so everyone pays Alex back.",
+      "start": 21.19,
+      "end": 25.15,
+      "acts": [
+        {
+          "kind": "click",
+          "target": "button:Settle up",
+          "text": ""
+        }
+      ]
+    },
+    {
+      "say": "And Alex is still owed one cent. It never says all settled up. That should be zero.",
+      "start": 25.15,
+      "end": 31.51,
+      "acts": [
+        {
+          "kind": "hover",
+          "target": "css=[data-member=alex] .balance-desc",
+          "text": ""
+        }
+      ]
+    }
+  ]
+}
