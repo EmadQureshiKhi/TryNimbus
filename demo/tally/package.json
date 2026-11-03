@@ -1,0 +1,11 @@
+{
+  "name": "tally",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Tally: split trip expenses with friends. A static single-page app.",
+  "type": "module",
+  "scripts": {
+    "start": "python3 -m http.server 5174 --bind 127.0.0.1",
+    "test": "node --test"
+  }
+}
