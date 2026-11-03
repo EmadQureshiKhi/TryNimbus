@@ -2,9 +2,9 @@
 
 The real controller (`NimbusApp`) and panel run on an offscreen Qt screen the size of a 1440x900
 Retina Mac. A simulated person opens the panel, switches to Repro, imports the narrated bug recording
-(`tools/make_bug_video.py`) with Import..., watches the pipeline and opens the report. The pipeline
+(`artifacts/fixtures/bug_cart_total.mp4`) with Import..., watches the pipeline and opens the report. The pipeline
 runs for real: Meta models plan from the video, Chromium reproduces the bug headless, Muse Code fixes
-it, the same steps are run again, and the report is written. It works on a throwaway clone of
+it, the same steps are run again, and the report is written. It works on a throwaway seeded copy of
 `demo/shopapp` served on a free port, so the demo repo is never touched.
 
 The recording shows the panel beside what Nimbus is working on at each stage: the bug recording
@@ -359,7 +359,7 @@ def main() -> int:
     ap.add_argument("--video", type=Path, default=ROOT / "artifacts" / "evals" / "repro_e2e.mp4")
     args = ap.parse_args()
     if not BUG_VIDEO.exists():
-        print("run tools/make_bug_video.py first")
+        print(f"no bug recording at {BUG_VIDEO}: record a narrated bug video of the shop there")
         return 2
     demo_before = digest(DEMO)
     shutil.rmtree(TMP / "home", ignore_errors=True)

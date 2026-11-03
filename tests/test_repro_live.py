@@ -1,7 +1,9 @@
-"""End to end on the real Meta Model API: generated bug video -> plan -> reproduction -> fix -> proof.
+"""End to end on the real Meta Model API: recorded bug video -> plan -> reproduction -> fix -> proof.
 
-    .venv/bin/python tools/make_bug_video.py          # once, makes artifacts/fixtures/bug_cart_total.mp4
     .venv/bin/python -m pytest -m live tests/test_repro_live.py -s
+
+The bug video is the committed narrated recording artifacts/fixtures/bug_cart_total.mp4 (with its
+ground truth in bug_cart_total.json): two of the same item in the demo shop's cart, a wrong total.
 
 Needs MODEL_API_KEY. Uses Muse Code when `muse` is installed, else the Muse Spark coding agent. Works
 on a throwaway git copy of the demo shop, served on a free port, so the real demo repo is untouched.
@@ -35,7 +37,7 @@ async def test_whole_pipeline_fixes_the_cart_total_bug(shop_repo: Path, tmp_path
     if not config.get_secret("MODEL_API_KEY"):
         pytest.skip("MODEL_API_KEY is not set")
     if not FIXTURE.exists():
-        pytest.skip("run tools/make_bug_video.py first")
+        pytest.skip(f"no bug recording at {FIXTURE}: record a narrated bug video of the shop there")
     logging.basicConfig(level=logging.INFO)
     truth = json.loads(FIXTURE.with_suffix(".json").read_text())
     port = free_port()
