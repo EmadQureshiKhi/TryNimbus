@@ -8,6 +8,7 @@ from typing import Any
 
 import pytest
 from PIL import Image
+from playwright.async_api import Error as PlaywrightError
 from playwright.async_api import async_playwright
 
 from nimbus.engine.grounding import Located
@@ -19,6 +20,7 @@ from nimbus.repro.reproduce import (
     Reproducer,
     StepExecutor,
     key_chords,
+    launch_chromium,
     resolve_url,
     target_phrases,
 )
@@ -328,3 +330,39 @@ async def test_a_control_that_hides_itself_when_clicked_does_not_stall_the_step(
     assert state == "All settled up"
     assert outcome.duration_s < 5, f"the step took {outcome.duration_s:.1f}s"
     assert "Settle up" in outcome.detail
+
+
+class _Chromium:
+    """Stands in for `pw.chromium`: fails the bundled launch with `first`, records every launch."""
+
+    def __init__(self, first: str, chrome_ok: bool = True) -> None:
+        self.first, self.chrome_ok, self.calls = first, chrome_ok, []
+
+    async def launch(self, **kw: Any) -> str:
+        self.calls.append(kw.get("channel"))
+        if "channel" not in kw:
+            raise PlaywrightError(self.first)
+        if not self.chrome_ok:
+            raise PlaywrightError("Chromium distribution 'chrome' is not found")
+        return "chrome"
+
+
+class _Pw:
+    def __init__(self, chromium: _Chromium) -> None:
+        self.chromium = chromium
+
+
+async def test_without_playwrights_chromium_repro_uses_google_chrome() -> None:
+    chromium = _Chromium("Executable doesn't exist at /ms-playwright/chromium")
+    assert await launch_chromium(_Pw(chromium), headless=True) == "chrome"
+    assert chromium.calls == [None, "chrome"]
+
+
+async def test_other_launch_failures_are_not_hidden_and_no_browser_says_what_to_install() -> None:
+    crashed = _Chromium("Browser closed unexpectedly")
+    with pytest.raises(PlaywrightError, match="closed unexpectedly"):
+        await launch_chromium(_Pw(crashed), headless=True)
+    assert crashed.calls == [None]
+    neither = _Chromium("Executable doesn't exist", chrome_ok=False)
+    with pytest.raises(PlaywrightError, match="install Google Chrome"):
+        await launch_chromium(_Pw(neither), headless=True)

@@ -780,6 +780,21 @@ def _short(exc: BaseException) -> str:
 _DEFAULT = object()
 
 
+async def launch_chromium(pw: Any, *, headless: bool) -> Browser:
+    """Playwright's own Chromium, else the installed Google Chrome (the downloadable app ships neither)."""
+    try:
+        return await pw.chromium.launch(headless=headless)
+    except PlaywrightError as exc:
+        if "Executable doesn't exist" not in str(exc):
+            raise
+        log.info("Playwright's Chromium is not installed; trying Google Chrome")
+    try:
+        return await pw.chromium.launch(headless=headless, channel="chrome")
+    except PlaywrightError as exc:
+        raise PlaywrightError("Repro needs a browser: install Google Chrome, or run "
+                              "`python -m playwright install chromium`") from exc
+
+
 class Reproducer:
     """Run a bug plan in a fresh headless Chromium context and judge the end state.
 
@@ -819,7 +834,7 @@ class Reproducer:
         result = ReproResult(mode=mode, reproduced="uncertain", evidence="", out_dir=str(out_dir))
 
         async with async_playwright() as pw:
-            browser: Browser = await pw.chromium.launch(headless=self.headless)
+            browser = await launch_chromium(pw, headless=self.headless)
             context: BrowserContext | None = None
             video = None
             try:
