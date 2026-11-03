@@ -52,5 +52,5 @@ DMG="$ROOT/dist/Nimbus-$VERSION-arm64.dmg"
 rm -f "$DMG"
 hdiutil create -quiet -volname "Nimbus" -srcfolder "$STAGE" -ov -format UDZO "$DMG"
 rm -rf "$STAGE"
-shasum -a 256 "$DMG" | tee "$DMG.sha256"
+(cd dist && shasum -a 256 "${DMG:t}" | tee "${DMG:t}.sha256")
 echo "built $DMG ($(du -h "$DMG" | cut -f1))"
