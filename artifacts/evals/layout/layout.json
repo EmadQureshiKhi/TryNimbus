@@ -1,0 +1,65 @@
+[
+  {
+    "question": "Solve problem 1 step by step",
+    "url": "tests/fixtures/ui/whiteboard.html",
+    "steps": 4,
+    "frames": 5,
+    "problems": []
+  },
+  {
+    "question": "Walk me through solving problem 2",
+    "url": "tests/fixtures/ui/whiteboard.html",
+    "steps": 3,
+    "frames": 4,
+    "problems": []
+  },
+  {
+    "question": "How do I switch to Muse Spark 1.3 and send a message?",
+    "url": "tests/fixtures/ui/chat_app.html",
+    "steps": 3,
+    "frames": 4,
+    "problems": []
+  },
+  {
+    "question": "Where do I start a new chat?",
+    "url": "tests/fixtures/ui/chat_app.html?theme=dark",
+    "steps": 1,
+    "frames": 2,
+    "problems": []
+  },
+  {
+    "question": "Walk me through cutting a clip and then exporting the video",
+    "url": "tests/fixtures/ui/video_editor.html",
+    "steps": 5,
+    "frames": 6,
+    "problems": []
+  },
+  {
+    "question": "What are all the tools in the toolbar?",
+    "url": "tests/fixtures/ui/video_editor.html",
+    "steps": 7,
+    "frames": 8,
+    "problems": []
+  },
+  {
+    "question": "How do I clone this repo?",
+    "url": "https://github.com/meta-models/meta-model-cookbook",
+    "steps": 1,
+    "frames": 2,
+    "problems": []
+  },
+  {
+    "question": "Show me how to open the command palette and the extensions view",
+    "url": "https://vscode.dev",
+    "steps": 2,
+    "frames": 3,
+    "problems": []
+  },
+  {
+    "question": "Which tools would I use to draw a flowchart?",
+    "url": "https://excalidraw.com",
+    "steps": 5,
+    "frames": 6,
+    "problems": []
+  }
+]
