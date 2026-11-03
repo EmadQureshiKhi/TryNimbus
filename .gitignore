@@ -20,24 +20,24 @@ AGENTS.md
 .cursor/
 HACKATHON_BRIEF.md
 
-# Generated at run time: Repro working copies, eval reports, renders, scratch
+# Generated at run time and not kept: Repro working copies, run videos and logs, scratch
 /runs/
 /artifacts/tmp/
-/artifacts/evals/
-/artifacts/ui/
+/artifacts/evals/*.mp4
+/artifacts/evals/e2e.log
+/artifacts/evals/shadow_plan*/
 /artifacts/demo/
 demo/shopapp/node_modules/
 
 # Internal tooling used to make the demo film, fixtures and README art
 tools/demo-studio/
 tools/make_*.py
-tools/render_panel.py
-tools/render_overlay.py
 tools/overlay_demo.py
 tools/ui_preview.py
 
-# Demo-film-only app and its fixtures
-demo/tally/
-tools/tally_repro_check.py
-artifacts/fixtures/bug_tally_cent.*
+# Fixture used only by the demo film
 artifacts/fixtures/tutorial_vscode_js_indent.*
+
+# Debug renders of layout bugs that have since been fixed
+artifacts/ui/excalidraw_labels.png
+artifacts/ui/overlay_math*.png
