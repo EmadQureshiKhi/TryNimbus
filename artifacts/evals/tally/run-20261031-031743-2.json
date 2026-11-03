@@ -1,0 +1,157 @@
+{
+  "run": 2,
+  "status": "fixed",
+  "message": "Fixed and verified. Settle up now leaves everyone square with nothing owed.",
+  "total_s": 80.9,
+  "stage_start_s": {
+    "analyze": 0.0,
+    "launch": 23.7,
+    "reproduce": 24.0,
+    "fix": 32.5,
+    "verify": 65.1,
+    "report": 80.9
+  },
+  "timings": {
+    "analyze": 23.69,
+    "launch": 0.35,
+    "reproduce": 8.41,
+    "fix": 32.66,
+    "verify": 9.37
+  },
+  "checks": {
+    "plan: types the dinner and clicks Add expense and Settle up": true,
+    "before: bug reproduced with evidence": true,
+    "fix: by Muse Code": true,
+    "fix: changes ledger.js": true,
+    "fix: regression test added": true,
+    "fix: regression test fails on the old code": true,
+    "tests pass after the fix": true,
+    "after: expected behaviour visible, bug gone": true,
+    "fixed ledger: shares add up for every amount": true,
+    "fixed ledger: $100 three ways settles to zero": true,
+    "status fixed": true,
+    "clone: main still has the seeded bug": true,
+    "demo/tally untouched": true
+  },
+  "plan": {
+    "title": "Rounding error after Settle up leaves $0.01 owed instead of $0.00",
+    "url": "127.0.0.1:5174 - shown in address bar as 'Lisbon trip - Tally | 127.0.0.1:5174'",
+    "expected": "After clicking `Settle up` all balances should be $0.00 / `owes nothing` / `all settled up`. No one should be owed anything. Suggested payments ($33.33 each) should fully settle Alex.",
+    "actual": "After clicking `Settle up` the Balances panel does NOT settle to zero. It shows: `Alex is owed $0.01`, `Sam owes nothing`, `Jo owes nothing`. `Settle up` remains enabled. Balances should be $0.00 / all settled but $0.01 remains due to rounding error on $100.00 / 3.",
+    "bug_time": 24.5,
+    "model": "muse-spark-1.2",
+    "steps": [
+      {
+        "action": "navigate",
+        "target": "address bar - 127.0.0.1:5174",
+        "text": "",
+        "instruction": "Navigate to Lisbon trip group from fresh load"
+      },
+      {
+        "action": "click",
+        "target": "Description input",
+        "text": "",
+        "instruction": "Click Description input [placeholder 'e.g. Dinner at Taberna']"
+      },
+      {
+        "action": "type",
+        "target": "Description input",
+        "text": "Dinner",
+        "instruction": "Type exactly 'Dinner'"
+      },
+      {
+        "action": "click",
+        "target": "Amount input",
+        "text": "",
+        "instruction": "Click Amount input [shows $ 0.00]"
+      },
+      {
+        "action": "type",
+        "target": "Amount input",
+        "text": "100",
+        "instruction": "Type exactly '100'"
+      },
+      {
+        "action": "select",
+        "target": "Paid by dropdown",
+        "text": "Alex",
+        "instruction": "Verify Paid by selector is 'Alex' [default - do not change] - Split equally between everyone"
+      },
+      {
+        "action": "click",
+        "target": "Add expense button",
+        "text": "",
+        "instruction": "Click 'Add expense' purple button"
+      },
+      {
+        "action": "click",
+        "target": "Settle up button",
+        "text": "",
+        "instruction": "Click 'Settle up' blue button in Balances panel"
+      }
+    ]
+  },
+  "before": {
+    "reproduced": "yes",
+    "evidence": "Balances panel shows 'Alex is owed $0.01', 'Sam owes nothing', 'Jo owes nothing' with 'Settle up' still enabled, and Expenses shows 'Dinner $100.00' plus two '$33.33 Settle up payment' entries matching REFERENCE",
+    "methods": [
+      "navigate",
+      "locator",
+      "locator",
+      "locator",
+      "locator",
+      "locator",
+      "locator",
+      "locator"
+    ]
+  },
+  "fix": {
+    "engine": "muse-code",
+    "branch": "nimbus/repro-3dc8696b0e",
+    "root_cause": "`splitEvenly` rounded every share with `Math.round`, so $100/3 gave three $33.33 shares totalling $99.99 and leaving $0.01 unbalanced.",
+    "summary": "Changed `splitEvenly` to use floor plus distributing the leftover cents one each to the first members so shares always sum to the expense amount.",
+    "changed_files": [
+      "ledger.js",
+      "ledger.test.js"
+    ],
+    "diff": "diff --git a/ledger.js b/ledger.js\nindex ea2a9d7..1f00096 100644\n--- a/ledger.js\n+++ b/ledger.js\n@@ -44,8 +44,9 @@ export function parseAmount(text) {\n  */\n export function splitEvenly(amountCents, memberIds) {\n   if (!memberIds.length) throw new RangeError(\"cannot split between nobody\");\n-  const share = Math.round(amountCents / memberIds.length);\n-  return Object.fromEntries(memberIds.map((id) => [id, share]));\n+  const base = Math.floor(amountCents / memberIds.length);\n+  const remainder = amountCents - base * memberIds.length;\n+  return Object.fromEntries(memberIds.map((id, i) => [id, base + (i < remainder ? 1 : 0)]));\n }\n \n /**\ndiff --git a/ledger.test.js b/ledger.test.js\nindex 2ac46b5..81ed34e 100644\n--- a/ledger.test.js\n+++ b/ledger.test.js\n@@ -74,6 +74,13 @@ test(\"money is formatted as US dollars\", () => {\n   assert.equal(formatMoney(120000), \"$1,200.00\");\n });\n \n+test(\"a $100 dinner split 3 ways settles to zero\", () => {\n+  let group = addExpense(trip(), { description: \"Dinner\", amountCents: 10000, paidBy: \"alex\" });\n+  group = settleUp(group);\n+  assert.deepEqual(balances(group), { alex: 0, sam: 0, jo: 0 });\n+  assert.equal(isSettled(group), true);\n+});\n+\n test(\"balances read as owed, owes or nothing\", () => {\n   assert.equal(describeBalance(6000), \"is owed $60.00\");\n   assert.equal(describeBalance(-3000), \"owes $30.00\");\n",
+    "attempts": [
+      {
+        "engine": "muse-code",
+        "ok": true,
+        "detail": "Muse Code finished",
+        "duration_s": 32.1
+      }
+    ],
+    "message": "Fixed by muse-code; tests pass and the regression test fails on the old code."
+  },
+  "fixed_ledger": {
+    "bad": [],
+    "badCount": 0,
+    "settled": true,
+    "balances": {
+      "alex": 0,
+      "sam": 0,
+      "jo": 0
+    }
+  },
+  "after": {
+    "reproduced": "no",
+    "evidence": "AFTER Balances panel shows 'Alex owes nothing', 'Sam owes nothing', 'Jo owes nothing' and 'All settled up Everyone is square. Nice trip!' with no 'is owed $0.01' and no Settle up button",
+    "methods": [
+      "navigate",
+      "locator",
+      "locator",
+      "locator",
+      "locator",
+      "locator",
+      "locator",
+      "locator"
+    ]
+  },
+  "tests": "ts\n  ---\n  duration_ms: 0.801292\n  type: 'test'\n  ...\n# Subtest: an even amount splits into equal shares\nok 3 - an even amount splits into equal shares\n  ---\n  duration_ms: 0.133542\n  type: 'test'\n  ...\n# Subtest: adding an expense lists it and credits the payer\nok 4 - adding an expense lists it and credits the payer\n  ---\n  duration_ms: 0.155125\n  type: 'test'\n  ...\n# Subtest: an expense needs a description, a payer in the group and a positive amount\nok 5 - an expense needs a description, a payer in the group and a positive amount\n  ---\n  duration_ms: 0.439333\n  type: 'test'\n  ...\n# Subtest: suggested payments go from whoever owes to whoever is owed\nok 6 - suggested payments go from whoever owes to whoever is owed\n  ---\n  duration_ms: 0.255708\n  type: 'test'\n  ...\n# Subtest: settling up an even split brings every balance to zero\nok 7 - settling up an even split brings every balance to zero\n  ---\n  duration_ms: 0.184917\n  type: 'test'\n  ...\n# Subtest: money is formatted as US dollars\nok 8 - money is formatted as US dollars\n  ---\n  duration_ms: 11.419834\n  type: 'test'\n  ...\n# Subtest: a $100 dinner split 3 ways settles to zero\nok 9 - a $100 dinner split 3 ways settles to zero\n  ---\n  duration_ms: 0.351916\n  type: 'test'\n  ...\n# Subtest: balances read as owed, owes or nothing\nok 10 - balances read as owed, owes or nothing\n  ---\n  duration_ms: 0.568333\n  type: 'test'\n  ...\n1..10\n# tests 10\n# suites 0\n# pass 10\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 66.282959\n",
+  "report_html": "artifacts/tmp/tally_repro/runs/4e6315437a/report.html",
+  "run_dir": "artifacts/tmp/tally_repro/runs/4e6315437a",
+  "error": "",
+  "clone": ""
+}

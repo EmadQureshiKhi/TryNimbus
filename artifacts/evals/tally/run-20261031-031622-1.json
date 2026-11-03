@@ -1,0 +1,165 @@
+{
+  "run": 1,
+  "status": "fixed",
+  "message": "Fixed and verified. Everyone is now square after settling the one hundred dollar dinner.",
+  "total_s": 93.0,
+  "stage_start_s": {
+    "analyze": 0.0,
+    "launch": 26.4,
+    "reproduce": 26.7,
+    "fix": 36.5,
+    "verify": 72.4,
+    "report": 93.0
+  },
+  "timings": {
+    "analyze": 26.36,
+    "launch": 0.35,
+    "reproduce": 9.8,
+    "fix": 35.89,
+    "verify": 10.71
+  },
+  "checks": {
+    "plan: types the dinner and clicks Add expense and Settle up": true,
+    "before: bug reproduced with evidence": true,
+    "fix: by Muse Code": true,
+    "fix: changes ledger.js": true,
+    "fix: regression test added": true,
+    "fix: regression test fails on the old code": true,
+    "tests pass after the fix": true,
+    "after: expected behaviour visible, bug gone": true,
+    "fixed ledger: shares add up for every amount": true,
+    "fixed ledger: $100 three ways settles to zero": true,
+    "status fixed": true,
+    "clone: main still has the seeded bug": true,
+    "demo/tally untouched": true
+  },
+  "plan": {
+    "title": "Lisbon trip - $0.01 residual balance after Settle up on $100/3 split",
+    "url": "127.0.0.1:5174 - visible in browser address bar as `Lisbon trip - Tally` / `127.0.0.1:5174`",
+    "expected": "After clicking `Settle up`, Suggested Payments `Sam pays Alex $33.33` and `Jo pays Alex $33.33` should fully settle the $100.00 expense split 3 ways. All Balances should be $0.00 - `Alex is owed $0.00` / `owes nothing` / `All settled up` and no residual balance.",
+    "actual": " 00:23-00:32.3 Balances panel shows `Alex is owed $0.01` / Sam `owes nothing` / Jo `owes nothing`. `Settle up` button remains/dimmed but 1 cent remains un-settled. The ledger is not zeroed, despite Suggested Payments of 2x $33.33 having been applied. Bug visible from ~00:23.5 after `Settle up` click, clearly hovered at ~00:26-00:32.3.",
+    "bug_time": 23.5,
+    "model": "muse-spark-1.2",
+    "steps": [
+      {
+        "action": "navigate",
+        "target": "address bar - Lisbon trip - Tally",
+        "text": "",
+        "instruction": "Navigate to Lisbon trip group"
+      },
+      {
+        "action": "click",
+        "target": "Add expense -> Description input placeholder e.g. Dinner at Taberna",
+        "text": "",
+        "instruction": "Click Description input"
+      },
+      {
+        "action": "type",
+        "target": "Description input",
+        "text": "Dinner",
+        "instruction": "Type Description = Dinner"
+      },
+      {
+        "action": "click",
+        "target": "Add expense -> Amount input placeholder $ 0.00",
+        "text": "",
+        "instruction": "Click Amount input"
+      },
+      {
+        "action": "type",
+        "target": "Amount input",
+        "text": "100",
+        "instruction": "Type Amount = 100"
+      },
+      {
+        "action": "select",
+        "target": "Paid by dropdown value Alex",
+        "text": "Alex",
+        "instruction": "Verify Paid by = Alex - default, do not change - Split equally between everyone"
+      },
+      {
+        "action": "click",
+        "target": "Add expense button - purple button in Add expense form",
+        "text": "",
+        "instruction": "Click Add expense button"
+      },
+      {
+        "action": "observe",
+        "target": "Right panel Balances + SUGGESTED PAYMENTS",
+        "text": "",
+        "instruction": "Observe Balances - narration states balances look right"
+      },
+      {
+        "action": "click",
+        "target": "Settle up button - blue button at bottom of Balances panel",
+        "text": "",
+        "instruction": "Click Settle up button"
+      }
+    ]
+  },
+  "before": {
+    "reproduced": "yes",
+    "evidence": "Balances panel shows 'Alex is owed $0.01', 'Sam owes nothing', 'Jo owes nothing' with Expenses 'Dinner $100.00' plus two 'Settle up payment $33.33' entries and Settle up button still present",
+    "methods": [
+      "navigate",
+      "dom",
+      "locator",
+      "dom",
+      "locator",
+      "dom",
+      "dom",
+      "skipped",
+      "dom"
+    ]
+  },
+  "fix": {
+    "engine": "muse-code",
+    "branch": "nimbus/repro-c02a004e64",
+    "root_cause": "splitEvenly rounded each share independently so three 3333\u00a2 shares totaled 9999\u00a2, leaving a 1\u00a2 residual on the payer.",
+    "summary": "Distribute the remainder cents one each to the first members so shares sum exactly to the expense amount.",
+    "changed_files": [
+      "ledger.js",
+      "ledger.test.js"
+    ],
+    "diff": "diff --git a/ledger.js b/ledger.js\nindex ea2a9d7..1f00096 100644\n--- a/ledger.js\n+++ b/ledger.js\n@@ -44,8 +44,9 @@ export function parseAmount(text) {\n  */\n export function splitEvenly(amountCents, memberIds) {\n   if (!memberIds.length) throw new RangeError(\"cannot split between nobody\");\n-  const share = Math.round(amountCents / memberIds.length);\n-  return Object.fromEntries(memberIds.map((id) => [id, share]));\n+  const base = Math.floor(amountCents / memberIds.length);\n+  const remainder = amountCents - base * memberIds.length;\n+  return Object.fromEntries(memberIds.map((id, i) => [id, base + (i < remainder ? 1 : 0)]));\n }\n \n /**\ndiff --git a/ledger.test.js b/ledger.test.js\nindex 2ac46b5..02389f8 100644\n--- a/ledger.test.js\n+++ b/ledger.test.js\n@@ -69,6 +69,15 @@ test(\"settling up an even split brings every balance to zero\", () => {\n   assert.equal(isSettled(group), true);\n });\n \n+test(\"$100 split three ways settles with no residual cent\", () => {\n+  const group = addExpense(trip(), { description: \"Dinner\", amountCents: 10000, paidBy: \"alex\" });\n+  const totalShares = Object.values(group.expenses[0].shares).reduce((sum, cents) => sum + cents, 0);\n+  assert.equal(totalShares, 10000);\n+  const settled = settleUp(group);\n+  assert.deepEqual(balances(settled), { alex: 0, sam: 0, jo: 0 });\n+  assert.equal(isSettled(settled), true);\n+});\n+\n test(\"money is formatted as US dollars\", () => {\n   assert.equal(formatMoney(3333), \"$33.33\");\n   assert.equal(formatMoney(120000), \"$1,200.00\");\n",
+    "attempts": [
+      {
+        "engine": "muse-code",
+        "ok": true,
+        "detail": "Muse Code finished",
+        "duration_s": 35.4
+      }
+    ],
+    "message": "Fixed by muse-code; tests pass and the regression test fails on the old code."
+  },
+  "fixed_ledger": {
+    "bad": [],
+    "badCount": 0,
+    "settled": true,
+    "balances": {
+      "alex": 0,
+      "sam": 0,
+      "jo": 0
+    }
+  },
+  "after": {
+    "reproduced": "no",
+    "evidence": "AFTER Balances shows 'Alex owes nothing' / 'Sam owes nothing' / 'Jo owes nothing' and 'All settled up Everyone is square. Nice trip!' with Settle up button gone, after 'Jo paid Alex $33.33' and 'Sam paid Alex $33.33' for $100.00 Dinner, vs BEFORE 'Alex is owed $0.01'",
+    "methods": [
+      "navigate",
+      "dom",
+      "locator",
+      "dom",
+      "locator",
+      "dom",
+      "dom",
+      "skipped",
+      "dom"
+    ]
+  },
+  "tests": "ation_ms: 0.609041\n  type: 'test'\n  ...\n# Subtest: an even amount splits into equal shares\nok 3 - an even amount splits into equal shares\n  ---\n  duration_ms: 0.119167\n  type: 'test'\n  ...\n# Subtest: adding an expense lists it and credits the payer\nok 4 - adding an expense lists it and credits the payer\n  ---\n  duration_ms: 0.141917\n  type: 'test'\n  ...\n# Subtest: an expense needs a description, a payer in the group and a positive amount\nok 5 - an expense needs a description, a payer in the group and a positive amount\n  ---\n  duration_ms: 0.338708\n  type: 'test'\n  ...\n# Subtest: suggested payments go from whoever owes to whoever is owed\nok 6 - suggested payments go from whoever owes to whoever is owed\n  ---\n  duration_ms: 0.241375\n  type: 'test'\n  ...\n# Subtest: settling up an even split brings every balance to zero\nok 7 - settling up an even split brings every balance to zero\n  ---\n  duration_ms: 0.168792\n  type: 'test'\n  ...\n# Subtest: $100 split three ways settles with no residual cent\nok 8 - $100 split three ways settles with no residual cent\n  ---\n  duration_ms: 0.165\n  type: 'test'\n  ...\n# Subtest: money is formatted as US dollars\nok 9 - money is formatted as US dollars\n  ---\n  duration_ms: 11.699167\n  type: 'test'\n  ...\n# Subtest: balances read as owed, owes or nothing\nok 10 - balances read as owed, owes or nothing\n  ---\n  duration_ms: 0.40775\n  type: 'test'\n  ...\n1..10\n# tests 10\n# suites 0\n# pass 10\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 65.168875\n",
+  "report_html": "artifacts/tmp/tally_repro/runs/b80076f703/report.html",
+  "run_dir": "artifacts/tmp/tally_repro/runs/b80076f703",
+  "error": "",
+  "clone": ""
+}
